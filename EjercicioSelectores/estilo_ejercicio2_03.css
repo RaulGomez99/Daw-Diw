@@ -1,0 +1,29 @@
+:root{
+    --p-color-seleccionado: greenyellow;
+    --h2-color-mayuscula: darkred;
+    --h2-color-segundo: red;
+}
+
+ul{
+    list-style: none;
+}
+p::selection{
+    color: var(--p-color-seleccionado);
+}
+h2:nth-of-type(1){
+    color: var(--h2-color-mayuscula);
+}
+
+h2::first-letter{
+    color: var(--h2-color-segundo);
+}
+li:nth-child(odd):hover::before{
+    content: "Satán !";
+}
+
+li:nth-child(2n):hover::after{
+    content: "Alabado sea el Monstruo Espaguetti Volador";
+}
+li:nth-child(3):hover{
+    color: var(--p-color-seleccionado);
+}
