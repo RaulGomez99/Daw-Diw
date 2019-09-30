@@ -1,0 +1,54 @@
+:root {
+    --input-bg-validColor: orange;
+    --input-bg-inValidColor: red;
+    --input-bg-targetColor: blue;
+    --input-letter-targetColor: white;
+}
+
+* {
+    font-family: Grenze;
+}
+
+select {
+    border-radius: 10px;
+}
+
+input[type="text"]:valid {
+    background: var(--input-bg-validColor);
+}
+
+input[type="text"]:nth-of-type(1):target {
+    background: var(--input-bg-targetColor);
+    color: var(--input-letter-targetColor);
+}
+
+input[type="number"]:in-range {
+    background: var(--input-bg-validColor);
+}
+
+input[type="text"]:invalid {
+    background: var(--input-bg-inValidColor);
+}
+
+input[type="number"]:out-of-range {
+    background: var(--input-bg-inValidColor);
+}
+
+
+
+input[type="submit"] {
+    border-radius: 100px;
+    background-color: var(--input-bg-validColor);
+    text-transform: uppercase;
+    box-shadow: 1px 1px 7px red;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+label::after{
+  /*  content: url(./cthulhu.svg);*/
+  content:"aaaaaaaaaaaaaaaaaaaaaa";
+}
