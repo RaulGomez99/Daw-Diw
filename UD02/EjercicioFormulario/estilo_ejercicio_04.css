@@ -48,7 +48,13 @@ a {
     text-decoration: none;
 }
 
-label::after{
-  /*  content: url(./cthulhu.svg);*/
-  content:"aaaaaaaaaaaaaaaaaaaaaa";
+#dificultad:checked:after{
+    background-image: url('cthulhu.svg');
+    background-size: 100%;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    content:"";
+    margin: 50px;
+   
 }
