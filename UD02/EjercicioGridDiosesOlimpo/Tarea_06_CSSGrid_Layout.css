@@ -19,3 +19,7 @@
  .item:nth-child(2n-1):hover + .item , .item:nth-child(2n-1):hover{
     box-shadow: 10px 10px;
  }
+
+ #SealOfApproval:after{
+    content: url(cthulhu_approval.gif);
+ }
