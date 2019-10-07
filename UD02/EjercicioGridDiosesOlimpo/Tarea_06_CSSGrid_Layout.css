@@ -2,7 +2,20 @@
      display: grid;
      grid-gap: 20px;
      grid-template-columns: 1fr 2fr 1fr 2fr;
+     grid-template-rows: repeat(5, 1fr);
  }
  .item:nth-child(odd){
      background-color: gray;
+ }
+
+ .item2{
+     grid-column-end: span 3;
+ }
+
+ h1{
+     text-align: center;
+ }
+
+ .item:nth-child(2n-1):hover{
+    box-shadow: 10px 10px;
  }
