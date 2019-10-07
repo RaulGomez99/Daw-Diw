@@ -1,1 +1,8 @@
- 
+ .container{
+     display: grid;
+     grid-gap: 20px;
+     grid-template-columns: 1fr 2fr 1fr 2fr;
+ }
+ .item:nth-child(odd){
+     background-color: gray;
+ }
