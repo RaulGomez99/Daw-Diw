@@ -22,4 +22,7 @@
 
  #SealOfApproval:after{
     content: url(cthulhu_approval.gif);
+    position: fixed;
+    bottom: 0;
+    right: 0;
  }
