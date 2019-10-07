@@ -1,3 +1,4 @@
+ /*Aquí esta los tamaños del git he puesto que el numero es la mitad que la palabra*/
  .container{
      display: grid;
      grid-gap: 20px;
@@ -16,12 +17,16 @@
      text-align: center;
  }
 
+ /*Aqui cojo el Hover de los impares y el item inmediatamente siguiente con el +
+ y luego una coma y el hover de este item otra vez ya que si no, no se aplica a si mismo*/
  .item:nth-child(2n-1):hover + .item , .item:nth-child(2n-1):hover{
     box-shadow: 10px 10px;
  }
 
+
  #SealOfApproval:after{
     content: url(cthulhu_approval.gif);
+     /*Con un position fixed puedo ponerlo abajo a la derecha*/
     position: fixed;
     bottom: 0;
     right: 0;
