@@ -25,9 +25,15 @@
 
 
  #SealOfApproval{
-    content: url(cthulhu_approval.gif);
+    background-image: url(cthulhu_approval.gif);
+    content: "";
+    background-size: 200px 170px;
+    width: 143px;
+    height: 120px; 
      /*Con un position fixed puedo ponerlo abajo a la derecha*/
     position: fixed;
     bottom: 0;
     right: 0;
+    margin: 30px;
+    
  }
