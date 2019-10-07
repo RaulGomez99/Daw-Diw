@@ -24,7 +24,7 @@
  }
 
 
- #SealOfApproval:after{
+ #SealOfApproval{
     content: url(cthulhu_approval.gif);
      /*Con un position fixed puedo ponerlo abajo a la derecha*/
     position: fixed;
