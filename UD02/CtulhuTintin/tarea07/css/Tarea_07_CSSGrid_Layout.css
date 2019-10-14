@@ -1,0 +1,48 @@
+.pagina{
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: 150px 1fr;
+    grid-template-areas: "head head"
+                        "enlaces imagenes"
+                        "foot foot";
+}
+header{
+    grid-area: head;
+    justify-self: center;
+}
+nav{
+    grid-area: enlaces;
+    
+    
+}
+nav li{
+    box-shadow: 5px 4px 11px black; 
+    margin: 10px;
+}
+ul{
+    list-style: none;
+}
+main{
+    grid-area: imagenes;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-gap: 20px 7px;
+    justify-items: stretch;
+}
+
+footer{
+    grid-area: foot;
+    justify-self: center;
+}
+
+.gallery__img img{
+    border: solid white 1px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  
+}
+.gallery__img img:target{
+    box-shadow: 5px 5px lime;
+}
