@@ -17,6 +17,7 @@
 
 //let columnas = " 0 6 12 18 24 30 ";
 //let filas = "1 6 11 16 21"
+var coordenada=0;
 let columnas = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29];
 let filas = [2, 3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20];
 var mapa;
@@ -30,10 +31,10 @@ window.onload = function() {
 }
 
 function teclado(e) {
-    //Arriba = 38 -> 1
-    //Derecha = 39 -> 2
-    //Abajo = 40 -> 3
-    //Izquierda = 37 -> 4
+    //Arriba = 38 -> 1 -31
+    //Derecha = 39 -> 2 +1
+    //Abajo = 40 -> 3 +31
+    //Izquierda = 37 -> 4 -1
     var keyCode = e.keyCode;
     console.log(e.keyCode);
     switch (keyCode) {
@@ -52,7 +53,6 @@ function teclado(e) {
             break;
         
     }
-    reimprimir();
 }
 
 function mover(quien, direccionX, direccionY) {
@@ -60,8 +60,14 @@ function mover(quien, direccionX, direccionY) {
         if (mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 0 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 1) {
             mapa.mapa[quien.coordenadaY][quien.coordenadaX] -= 8;
             mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] += 8;
+            let div = quien.coordenadaY*31+quien.coordenadaX;
+            console.log(quien.coordenadaX+" "+quien.coordenadaY);
+            document.getElementById(div).classList.remove("personaje");
             quien.coordenadaX+=direccionX;
             quien.coordenadaY+=direccionY;
+            div = quien.coordenadaY*31+quien.coordenadaX;
+            console.log(div);
+            document.getElementById(div).classList.add("personaje");
             return true;
         } else {
 
@@ -113,6 +119,8 @@ function reimprimir() {
 
 function addElemento(num) {
     let div = document.createElement("div");
+    div.id=coordenada;
+    coordenada++;
     switch (num) {
         case 0:
 
