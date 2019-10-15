@@ -20,6 +20,7 @@
 var coordenada=0;
 let columnas = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29];
 let filas = [2, 3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20];
+let esquinasX = [];
 var mapa;
 var personaje = {
     "coordenadaX": 12,
@@ -36,48 +37,173 @@ function teclado(e) {
     //Abajo = 40 -> 3 +31
     //Izquierda = 37 -> 4 -1
     var keyCode = e.keyCode;
-    console.log(e.keyCode);
     switch (keyCode) {
-        case 37:
+        case 37: case 65:
             console.log(mover(personaje, -1, 0));
             break;
-        case 38:
+        case 38: case 87:
             console.log(mover(personaje, 0, -1));
             break;
-        case 39:
+        case 39: case 68:
             console.log(mover(personaje, 1, 0));
             break;
 
-        case 40:
+        case 40: case 83:
             console.log(mover(personaje, 0, 1));
             break;
         
+    }
+    murosAlrededor();
+}
+
+function pintar(x, y, numPrim, numSust){
+    if(mapa.mapa[y][x]==numPrim){
+        mapa.mapa[y][x]=numSust;
+        pintar(x+1, y+1, numPrim, numSust);
+        pintar(x+1, y, numPrim, numSust);
+        pintar(x+1, y-1, numPrim, numSust);
+        pintar(x-1, y+1, numPrim, numSust);
+        pintar(x-1, y, numPrim, numSust);
+        pintar(x-1, y-1, numPrim, numSust);
+        pintar(x, y+1, numPrim, numSust);
+        pintar(x, y-1, numPrim, numSust);
+    }
+}
+
+function alrededor(x, y){
+    console.log(x+" "+y)
+    if(mapa.mapa[y][x]==0){
+        console.log(x+" "+y)
+        return false;
+    }
+    if(mapa.mapa[y][x]==1) return true;
+    if(mapa.mapa[y][x]==3) return true;
+    if(mapa.mapa[y][x]==8) return true;
+    if(mapa.mapa[y][x]==9) return true;
+    mapa.mapa[y][x]=3;
+    if(!alrededor(x+1, y+1)) return false;
+    if(!alrededor(x+1, y)) return false;
+    if(!alrededor(x+1, y-1)) return false;
+    if(!alrededor(x-1, y+1)) return false;
+    if(!alrededor(x-1, y)) return false;
+    if(!alrededor(x-1, y-1)) return false;
+    if(!alrededor(x, y+1)) return false;
+    if(!alrededor(x, y-1)) return false;
+    return true;
+}
+
+function murosAlrededor(){
+    console.log("Muritos")
+    if(personaje.coordenadaX!=0){
+        if(mapa.mapa[personaje.coordenadaY][personaje.coordenadaX-1]==2){
+            if(alrededor(personaje.coordenadaX-1,personaje.coordenadaY)){
+                reimprimir();
+            }else{
+                pintar(personaje.coordenadaX-1,personaje.coordenadaY,3,2);
+            }
+        }
+        if(personaje.coordenadaY!=0){
+            if(mapa.mapa[personaje.coordenadaY-1][personaje.coordenadaX-1]==2){
+                if(alrededor(personaje.coordenadaX-1,personaje.coordenadaY-1)){
+                    reimprimir();
+                }else{
+                    pintar(personaje.coordenadaX-1,personaje.coordenadaY-1,3,2);
+                }
+            }
+        }
+        if(personaje.coordenadaY!=21){
+            if(mapa.mapa[personaje.coordenadaY+1][personaje.coordenadaX-1]==2){
+                if(alrededor(personaje.coordenadaX-1,personaje.coordenadaY+1)){
+                    reimprimir();
+                }else{
+                    pintar(personaje.coordenadaX-1,personaje.coordenadaY+1,3,2);
+                }
+            }
+        }
+    }
+    if(personaje.coordenadaX!=30){
+        if(mapa.mapa[personaje.coordenadaY][personaje.coordenadaX+1]==2){
+            if(alrededor(personaje.coordenadaX+1,personaje.coordenadaY)){
+                reimprimir();
+            }else{
+                pintar(personaje.coordenadaX+1,personaje.coordenadaY,3,2);
+            }
+        }
+        if(personaje.coordenadaY!=0){
+            if(mapa.mapa[personaje.coordenadaY-1][personaje.coordenadaX+1]==2){
+                if(alrededor(personaje.coordenadaX+1,personaje.coordenadaY-1)){
+                    reimprimir();
+                }else{
+                    pintar(personaje.coordenadaX+1,personaje.coordenadaY-1,3,2);
+                }
+            }
+        }
+        if(personaje.coordenadaY!=21){
+            if(mapa.mapa[personaje.coordenadaY+1][personaje.coordenadaX+1]==2){
+                if(alrededor(personaje.coordenadaX+1,personaje.coordenadaY+1)){
+                    reimprimir();
+                }else{
+                    pintar(personaje.coordenadaX+1,personaje.coordenadaY+1,3,2);
+                }
+            }
+        }
+    }
+    if(personaje.coordenadaY!=0){
+        if(mapa.mapa[personaje.coordenadaY-1][personaje.coordenadaX]==2){
+            if(alrededor(personaje.coordenadaX,personaje.coordenadaY-1)){
+                reimprimir();
+            }else{
+                pintar(personaje.coordenadaX,personaje.coordenadaY-1,3,2);
+            }
+        }
+    }
+    if(personaje.coordenadaY!=21){
+        if(mapa.mapa[personaje.coordenadaY+1][personaje.coordenadaX]==2){
+            if(alrededor(personaje.coordenadaX,personaje.coordenadaY+1)){
+                reimprimir();
+            }else{
+                pintar(personaje.coordenadaX,personaje.coordenadaY+1,3,2);
+            }
+        }
     }
 }
 
 function mover(quien, direccionX, direccionY) {
     try {
         if (mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 0 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 1) {
-            mapa.mapa[quien.coordenadaY][quien.coordenadaX] -= 8;
+            mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 1;
             mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] += 8;
             let div = quien.coordenadaY*31+quien.coordenadaX;
-            console.log(quien.coordenadaX+" "+quien.coordenadaY);
-            document.getElementById(div).classList.remove("personaje");
+            var divi = document.getElementById(div);
+            divi.classList.remove("personaje");
+            if(quien.coordenadaY==0){
+                divi.classList.remove("camino");
+                mapa.mapa[quien.coordenadaY][quien.coordenadaX] =-1;
+            }
+            if(!divi.classList.contains("huella") && quien.coordenadaY!=0){
+                divi.classList.add("huella");
+            }
             quien.coordenadaX+=direccionX;
             quien.coordenadaY+=direccionY;
             div = quien.coordenadaY*31+quien.coordenadaX;
-            console.log(div);
-            document.getElementById(div).classList.add("personaje");
+            divi=document.getElementById(div);
+            divi.classList.add("personaje");
+            comprueba(div);
+            if(divi.classList.contains("huella")){
+                comprueba();
+            }
             return true;
         } else {
 
             return mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX];
         }
     } catch (e) {
-        return "Hola";
+        return false;
     }
 
 }
+
+
 
 function crearMapa() {
     document.getElementById("mapa").style.height = (window.innerHeight - 20);
@@ -109,6 +235,7 @@ function crearMapa() {
 
 function reimprimir() {
     document.getElementById("mapa").innerHTML = "";
+    coordenada=0;
     for (let y = 0; y < 22; y++) {
 
         for (let x = 0; x < 31; x++) {
@@ -126,12 +253,26 @@ function addElemento(num) {
 
             div.classList.add("camino");
             break;
+        case 1:
+
+                div.classList.add("camino");
+                div.classList.add("huella");
+                break;
         case 2:
             div.classList.add("columna");
+            break;
+        case 3:
+            div.style.background="red";
             break;
         case 8:
 
             div.classList.add("camino");
+            div.classList.add("personaje");
+            break;
+        case 9:
+
+            div.classList.add("camino");
+            div.classList.add("huella");
             div.classList.add("personaje");
             break;
         case 10:

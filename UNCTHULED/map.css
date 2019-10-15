@@ -19,12 +19,17 @@
     justify-self: stretch;
     background-color: darkgray;
 }
+.huella{
+    background-image: url(img/huella.png);
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
 .personaje{
     background-image: url(img/personaje2.png);
     background-repeat: no-repeat;
     background-size: cover;
-    width: 100%;
-    height: 100%;
+    background-position: unset;
 }
 .momia{
     background-image: url(img/momia.png);
