@@ -25,16 +25,73 @@
     background-size: 50%;
     background-position: center;
 }
-.personaje{
+/*.personaje{
     background-image: url(img/personaje2.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: unset;
-}
-.momia{
-    background-image: url(img/momia.png);
+}*/
+
+.personaje:after{
+    display:inline-block;
+    background-position: center;
+    content:"";
+    background-image: url(img/personaje.png);
     background-repeat: no-repeat;
-    background-size: 153%;
+    background-size: cover;
+    background-position: unset;
+    width:100%;
+    height:210%;
+    margin: -40% 0px 0px 0px;
+    z-index:6;
+    overflow: initial;
+    animation: andar 0.5s;
+}
+
+@keyframes andar{
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
+/*.momia{
+    background-image: url(img/momiaP.gif);
+    background-repeat: no-repeat;
+    background-size: 70%;
     background-position: center;
 
+}*/
+.momia:after{
+    display:inline-block;
+    background-position: center;
+    content:"";
+    background-image: url(img/momiaP.gif);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: unset;
+    width:100%;
+    height:230%;
+    margin: -60% 0px 0px 0px;
+    z-index:6;
+    overflow: initial;
+    animation: andar 0.5s;
+}
+
+#datos{
+    display: flex;
+    justify-content: space-around;
+}
+
+p{
+    display: inline;
+}
+
+.dato{
+    color: darkorange;
+    font-weight: bold;
+}
+span{
+    color: blue;
 }
