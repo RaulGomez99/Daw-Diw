@@ -1,5 +1,7 @@
-*{
-    background-color: yellow;
+body{
+    background-image: url(img/fondo1.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 #mapa{
     display: grid;
@@ -11,26 +13,51 @@
     align-self:  stretch;
     justify-self: stretch;
     /*background-image: url(img/backgroundColumn.jpg);*/
-    background-color: orange;
-    
-}
-.camino{
-    align-self: stretch;
-    justify-self: stretch;
-    background-color: darkgray;
-}
-.huella{
-    background-image: url(img/huella.png);
-    background-repeat: no-repeat;
-    background-size: 50%;
-    background-position: center;
-}
-/*.personaje{
-    background-image: url(img/personaje2.png);
+  /*  background-color: orange;*/
+    background-image: url(img/muro.png);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: unset;
-}*/
+    
+}
+.pergamino{
+    background-color: red;
+}
+
+.momiaM{
+    background-color: blue;
+}
+
+.llave{
+    background-color: yellow;
+}
+.urna{
+    background-color: green;
+}
+.camino{
+  /*  mix-blend-mode: overlay;*/
+    align-self: stretch;
+    justify-self: stretch;
+    /*background-color: darkgray;*/
+    background-image: url(img/camino.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+.descubierta{
+    align-self:  stretch;
+    justify-self: stretch;
+    /*background-image: url(img/backgroundColumn.jpg);*/
+  /*  background-color: orange;*/
+    background-image: url(img/descubierta.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.huella{
+    background-image: url(img/huella.png) ,url(img/camino.jpeg) ;
+    background-size: 50%, cover;
+    background-position: center, center;
+}
 
 .personaje:after{
     display:inline-block;
@@ -42,7 +69,7 @@
     background-position: unset;
     width:100%;
     height:210%;
-    margin: -40% 0px 0px 0px;
+    margin: -70% 0px 0px 0px;
     z-index:6;
     overflow: initial;
     animation: andar 0.5s;
@@ -56,13 +83,7 @@
         transform: translateY(0px);
     }
 }
-/*.momia{
-    background-image: url(img/momiaP.gif);
-    background-repeat: no-repeat;
-    background-size: 70%;
-    background-position: center;
 
-}*/
 .momia:after{
     display:inline-block;
     background-position: center;
@@ -73,7 +94,7 @@
     background-position: unset;
     width:100%;
     height:230%;
-    margin: -60% 0px 0px 0px;
+    margin: -80% 0px 0px 0px;
     z-index:6;
     overflow: initial;
     animation: andar 0.5s;
@@ -93,5 +114,5 @@ p{
     font-weight: bold;
 }
 span{
-    color: blue;
+    color: red;
 }

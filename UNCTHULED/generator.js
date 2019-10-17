@@ -17,9 +17,11 @@
 
 //let columnas = " 0 6 12 18 24 30 ";
 //let filas = "1 6 11 16 21"
+var columnasArray;
+var locked = true;
 var monstruos, intervals;
 var vidas=5;
-var momias = 2;
+var momias = 0;
 var coordenada=0;
 let columnas = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29];
 let filas = [2, 3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20];
@@ -30,7 +32,7 @@ var personaje = {
     "coordenadaY": 0,
     "personaje":true
 }
-var cthulhu = {
+/*var cthulhu = {
     "coordenadaX": 30,
     "coordenadaY": 21,
     "personaje":false,
@@ -38,8 +40,7 @@ var cthulhu = {
         vidas--;
 
     }
-}
-
+}*/
 window.onload = function() {
     crearMapa();
     document.addEventListener("keydown", teclado, false);
@@ -52,29 +53,44 @@ function crearMomia(numMomia, x,y){
         "numMomia":numMomia
     };
 }
-function teclado(e) {
-    //Arriba = 38 -> 1 -31
-    //Derecha = 39 -> 2 +1
-    //Abajo = 40 -> 3 +31
-    //Izquierda = 37 -> 4 -1
-    var keyCode = e.keyCode;
-    switch (keyCode) {
-        case 37: case 65:
-            mover(personaje, -1, 0);
-            break;
-        case 38: case 87:
-            mover(personaje, 0, -1);
-            break;
-        case 39: case 68:
-            mover(personaje, 1, 0);
-            break;
-
-        case 40: case 83:
-            mover(personaje, 0, 1);
-            break;
-        
+function crearColumna(x,y,xF,yF,tipo){
+    return { "xInicial":x,
+            "yInicial":y,
+            "xFinal":xF,
+            "yFinal":yF,
+            "tipo":tipo  
     }
-    murosAlrededor();
+}
+function teclado(e) {
+    if(locked){
+        locked=false;
+        //Arriba = 38 -> 1 -31
+        //Derecha = 39 -> 2 +1
+        //Abajo = 40 -> 3 +31
+        //Izquierda = 37 -> 4 -1
+        var keyCode = e.keyCode;
+        switch (keyCode) {
+            case 37: case 65:
+                mover(personaje, -1, 0);
+                break;
+            case 38: case 87:
+                mover(personaje, 0, -1);
+                break;
+            case 39: case 68:
+                mover(personaje, 1, 0);
+                break;
+
+            case 40: case 83:
+                mover(personaje, 0, 1);
+                break;
+            case 80:
+                velocidad=10;
+                break;
+            
+        }
+        murosAlrededor();
+        setTimeout( function(){ locked = true; },250); 
+    }
 }
 
 function pintar(x, y, numPrim, numSust){
@@ -99,6 +115,7 @@ function alrededor(x, y){
     if(mapa.mapa[y][x]==3) return true;
     if(mapa.mapa[y][x]==8) return true;
     if(mapa.mapa[y][x]==9) return true;
+    if(mapa.mapa[y][x]==10) return false;
     if(mapa.mapa[y][x]==11) return true;
     mapa.mapa[y][x]=3;
     if(!alrededor(x+1, y+1)) return false;
@@ -112,10 +129,34 @@ function alrededor(x, y){
     return true;
 }
 
+function compruebaContenidoColumna(x,y){
+    console.log(x+" "+y+" "+coordenadaColumna(x,y) )
+
+    switch (columnasArray[coordenadaColumna(x,y)]) {
+        case "llave":
+            pintar(x,y,3,4);
+            break;
+        case "urna":
+            pintar(x,y,3,5);
+            break;
+        case "pergamino":
+            pintar(x,y,3,6);
+            break;
+        case "momia":
+            pintar(x,y,3,7);
+            break;
+    
+        default:
+            alert("nada");
+            break;
+    }
+}
+
 function murosAlrededor(){
     if(personaje.coordenadaX!=0){
         if(mapa.mapa[personaje.coordenadaY][personaje.coordenadaX-1]==2){
             if(alrededor(personaje.coordenadaX-1,personaje.coordenadaY)){
+                compruebaContenidoColumna(personaje.coordenadaX-1,personaje.coordenadaY);
                 reimprimir();
             }else{
                 pintar(personaje.coordenadaX-1,personaje.coordenadaY,3,2);
@@ -124,6 +165,7 @@ function murosAlrededor(){
         if(personaje.coordenadaY!=0){
             if(mapa.mapa[personaje.coordenadaY-1][personaje.coordenadaX-1]==2){
                 if(alrededor(personaje.coordenadaX-1,personaje.coordenadaY-1)){
+                    compruebaContenidoColumna(personaje.coordenadaX-1,personaje.coordenadaY-1);
                     reimprimir();
                 }else{
                     pintar(personaje.coordenadaX-1,personaje.coordenadaY-1,3,2);
@@ -133,6 +175,8 @@ function murosAlrededor(){
         if(personaje.coordenadaY!=21){
             if(mapa.mapa[personaje.coordenadaY+1][personaje.coordenadaX-1]==2){
                 if(alrededor(personaje.coordenadaX-1,personaje.coordenadaY+1)){
+                    compruebaContenidoColumna(personaje.coordenadaX-1,personaje.coordenadaY+1);
+                    
                     reimprimir();
                 }else{
                     pintar(personaje.coordenadaX-1,personaje.coordenadaY+1,3,2);
@@ -143,6 +187,7 @@ function murosAlrededor(){
     if(personaje.coordenadaX!=30){
         if(mapa.mapa[personaje.coordenadaY][personaje.coordenadaX+1]==2){
             if(alrededor(personaje.coordenadaX+1,personaje.coordenadaY)){
+                compruebaContenidoColumna(personaje.coordenadaX+1,personaje.coordenadaY);
                 reimprimir();
             }else{
                 pintar(personaje.coordenadaX+1,personaje.coordenadaY,3,2);
@@ -151,6 +196,7 @@ function murosAlrededor(){
         if(personaje.coordenadaY!=0){
             if(mapa.mapa[personaje.coordenadaY-1][personaje.coordenadaX+1]==2){
                 if(alrededor(personaje.coordenadaX+1,personaje.coordenadaY-1)){
+                    compruebaContenidoColumna(personaje.coordenadaX+1,personaje.coordenadaY-1);
                     reimprimir();
                 }else{
                     pintar(personaje.coordenadaX+1,personaje.coordenadaY-1,3,2);
@@ -160,6 +206,7 @@ function murosAlrededor(){
         if(personaje.coordenadaY!=21){
             if(mapa.mapa[personaje.coordenadaY+1][personaje.coordenadaX+1]==2){
                 if(alrededor(personaje.coordenadaX+1,personaje.coordenadaY+1)){
+                    compruebaContenidoColumna(personaje.coordenadaX+1,personaje.coordenadaY+1);
                     reimprimir();
                 }else{
                     pintar(personaje.coordenadaX+1,personaje.coordenadaY+1,3,2);
@@ -170,6 +217,7 @@ function murosAlrededor(){
     if(personaje.coordenadaY!=0){
         if(mapa.mapa[personaje.coordenadaY-1][personaje.coordenadaX]==2){
             if(alrededor(personaje.coordenadaX,personaje.coordenadaY-1)){
+                compruebaContenidoColumna(personaje.coordenadaX,personaje.coordenadaY-1);
                 reimprimir();
             }else{
                 pintar(personaje.coordenadaX,personaje.coordenadaY-1,3,2);
@@ -179,6 +227,7 @@ function murosAlrededor(){
     if(personaje.coordenadaY!=21){
         if(mapa.mapa[personaje.coordenadaY+1][personaje.coordenadaX]==2){
             if(alrededor(personaje.coordenadaX,personaje.coordenadaY+1)){
+                compruebaContenidoColumna(personaje.coordenadaX,personaje.coordenadaY+1);
                 reimprimir();
             }else{
                 pintar(personaje.coordenadaX,personaje.coordenadaY+1,3,2);
@@ -190,93 +239,126 @@ function murosAlrededor(){
 function mover(quien, direccionX, direccionY) {
     try {
         if (mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 0 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 1) {
-            if(quien.personaje)mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 1;
-            if(quien.personaje)mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] = 8;
-            else mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] = 10;
+            mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 1;
+            mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] = 8;
             let div = quien.coordenadaY*31+quien.coordenadaX;
             var divi = document.getElementById(div);
-            if(quien.personaje)divi.classList.remove("personaje");
-            else divi.classList.remove("momia");
+            divi.classList.remove("personaje");
             if(quien.coordenadaY==0){
                 divi.classList.remove("camino");
                 mapa.mapa[quien.coordenadaY][quien.coordenadaX] =-1;
             }
-            if(!divi.classList.contains("huella") && quien.coordenadaY!=0 && quien.personaje){
+            if(!divi.classList.contains("huella") && quien.coordenadaY!=0){
                 divi.classList.add("huella");
             }
-            if(!quien.personaje){
-                if(divi.classList.contains("huella")) mapa.mapa[quien.coordenadaY][quien.coordenadaX]=1;
-                else mapa.mapa[quien.coordenadaY][quien.coordenadaX]=0;
-            }
             quien.coordenadaX+=direccionX;
             quien.coordenadaY+=direccionY;
             div = quien.coordenadaY*31+quien.coordenadaX;
             divi=document.getElementById(div);
-            if(quien.personaje)divi.classList.add("personaje");
-            else divi.classList.add("momia"); 
+            divi.classList.add("personaje");
+            comprueba(div);
+            if(divi.classList.contains("huella")){
+                comprueba();
+            }
             return true;
-      /*  }else if(mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 8 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 9){ 
-            //mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX]+=2;
-            mapa.mapa[quien.coordenadaY][quien.coordenadaX]=0;
+        } else if (mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 10 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 11)  {
+            console.log("a");
+            mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 1;
+            mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] = 8;
             let div = quien.coordenadaY*31+quien.coordenadaX;
             var divi = document.getElementById(div);
-            divi.classList.remove("momia");
-            if(divi.classList.contains("huella")){
-                mapa.mapa[quien.coordenadaY][quien.coordenadaX]=1;
+            divi.classList.remove("personaje");
+            if(quien.coordenadaY==0){
+                divi.classList.remove("camino");
+                mapa.mapa[quien.coordenadaY][quien.coordenadaX] =-1;
             }
+            if(!divi.classList.contains("huella") && quien.coordenadaY!=0){
+                divi.classList.add("huella");
+            }
+            console.log("c");
             quien.coordenadaX+=direccionX;
             quien.coordenadaY+=direccionY;
             div = quien.coordenadaY*31+quien.coordenadaX;
             divi=document.getElementById(div);
-            clearInterval(intervals[quien.numMomia]);
+            divi.classList.add("personaje");
+            divi.classList.remove("momia");
+            /*for(let i=0; i<momias; i++){
+                if(quien.coordenadaX==monstruos[i].coordenadaX && quien.coordenadaY==monstruos[i].coordenadaY){
+                    clearInterval(intervals[i]);
+                }
+            }*/
+            clearInterval(intervals[divi.momia]);
+            momias--;
+            document.getElementById("momias").innerText=momias;
             vidas--;
             document.getElementById("vidas").innerText=vidas;
-            
-        }else if(mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 11 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 10){
-            if(quien.personaje){
-                
-                mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX]=9;
-                mapa.mapa[quien.coordenadaY][quien.coordenadaX]=1;
-                let div = quien.coordenadaY*31+quien.coordenadaX;
-                var divi = document.getElementById(div);
-                divi.classList.remove("personaje");
-                if(!divi.classList.contains("huella") && quien.coordenadaY!=0 && quien.personaje){
-                    divi.classList.add("huella");
-                }
-                quien.coordenadaX+=direccionX;
-                quien.coordenadaY+=direccionY;
-                div = quien.coordenadaY*31+quien.coordenadaX;
-                divi=document.getElementById(div);
-                divi.classList.add("personaje");
-                divi.classList.remove("momia");
-                var numMomia;
-                //Buscar momia
-                monstruos.forEach(function(momia)  {
-                    if(momia.coordenadaX==quien.coordenadaX && momia.coordenadaY==quien.coordenadaY){
-                        numMomia=momia.numMomia;
-                    }
-                });
-                clearInterval(intervals[numMomia]);
-                vidas--;
-                
-                document.getElementById("vidas").innerText=vidas;
-            }*/
+
         }else{
-            console.log("a");
-           // console.log(mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX]);
             return mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX];
         }
+        
     } catch (e) {
         return false;
     }
-
 }
 
+function moverMomia(quien, direccionX, direccionY) {
+    try {
+        if (mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 0 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 1) {
+            
+            let div = quien.coordenadaY*31+quien.coordenadaX;
+            var divi = document.getElementById(div);
+            divi.classList.remove("momia");
+            divi.removeAttribute("momia");
+            if(divi.classList.contains("huella") ){
+                mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 1;
+                mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] = 11;
+            }else{
+                mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] = 10;
+                mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 0;
+            } 
+            quien.coordenadaX+=direccionX;
+            quien.coordenadaY+=direccionY;
+            div = quien.coordenadaY*31+quien.coordenadaX;
+            divi=document.getElementById(div);
+            divi.classList.add("momia");
+            divi.momia=quien.numMomia;
+            return true;
+        } else if (mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 8 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 9)  {
+            let div = quien.coordenadaY*31+quien.coordenadaX;
+            var divi = document.getElementById(div);
+            divi.classList.remove("momia");
+            divi.removeAttribute("momia");
+            if(divi.classList.contains("huella") ){
+                mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 1;
+            }else{
+                mapa.mapa[quien.coordenadaY][quien.coordenadaX] = 0;
+            } 
+            clearInterval(intervals[quien.numMomia]);
+            vidas--;
+            document.getElementById("vidas").innerText=vidas;
+            momias--;
+            document.getElementById("momias").innerText=momias;
 
+        }else{
+            return mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX];
+        }
+        
+    } catch (e) {
+        return false;
+    }
+}
+
+function coordenadaColumna(x,y){
+    return (Math.floor(x/6.01))+(5*Math.floor(y/5.01));
+}
 
 function crearMapa() {
     momias++;
     monstruos=[];
+    columnasArray = new Array(20);
+    aleatorizarColumnas();
+    document.getElementById("momias").innerText=momias;
     
     document.getElementById("mapa").style.height = (window.innerHeight -window.innerHeight*0.1);
     mapa = new Object();
@@ -319,6 +401,33 @@ function crearMapa() {
     
 }
 
+function aleatorizarColumnas(){
+    var num;
+    do{
+        var num=Math.floor(Math.random() * 20);
+        if(columnasArray[num]==undefined) columnasArray[num]="llave";
+        else num=0;
+    }while(!num);
+    var num;
+    do{
+        var num=Math.floor(Math.random() * 20);
+        if(columnasArray[num]==undefined) columnasArray[num]="urna";
+        else num=0;
+    }while(!num);
+    var num;
+    do{
+        var num=Math.floor(Math.random() * 20);
+        if(columnasArray[num]==undefined) columnasArray[num]="pergamino";
+        else num=0;
+    }while(!num);
+    var num;
+    do{
+        var num=Math.floor(Math.random() * 20);
+        if(columnasArray[num]==undefined) columnasArray[num]="momia";
+        else num=0;
+    }while(!num);
+}
+
 function reimprimir() {
     document.getElementById("mapa").innerHTML = "";
     coordenada=0;
@@ -332,16 +441,16 @@ function reimprimir() {
 
 function movimientoMomia(momia){
     if(momia.coordenadaX>personaje.coordenadaX){
-        mover(momia, -1 ,0);
+        moverMomia(momia, -1 ,0);
     }
     if(momia.coordenadaY>personaje.coordenadaY){
-        mover(momia, 0 ,-1);
+        moverMomia(momia, 0 ,-1);
     }
     if(momia.coordenadaX<personaje.coordenadaX){
-        mover(momia, 1 ,0);
+        moverMomia(momia, 1 ,0);
     }
     if(momia.coordenadaY<personaje.coordenadaY){
-        mover(momia, 0 ,1);
+        moverMomia(momia, 0 ,1);
     }
   //  reimprimir();
     
@@ -365,7 +474,19 @@ function addElemento(num) {
             div.classList.add("columna");
             break;
         case 3:
-            div.style.background="red";
+            div.classList.add("descubierta");
+            break;
+        case 4:
+            div.classList.add("llave");
+            break;
+        case 5:
+            div.classList.add("urna");
+            break;
+        case 6:
+            div.classList.add("pergamino");
+            break;
+        case 7:
+            div.classList.add("momiaM");
             break;
         case 8:
 
