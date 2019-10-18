@@ -19,20 +19,78 @@ body{
     background-size: cover;
     
 }
-.pergamino{
-    background-color: red;
-}
-
 .momiaM{
-    background-color: blue;
+    background-image: url(img/descubierto.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
-
+.pergamino {
+    background-image: url(img/pergamino2.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 .llave{
-    background-color: yellow;
+    background-image: url(img/lava.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .urna{
-    background-color: green;
+    background-image: url(img/urna.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+.pergaminoContenedor:after{
+    display:inline-block;
+    background-position: center;
+    content:"";
+    background-image: url(img/pergamino.png) !important;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    margin-bottom: -200%;
+    margin-right: -300%;
+    z-index:6;
+    width:300%;
+    height:200%;
+    z-index:6;
+    overflow: visible;
+    animation: objeto 3s infinite linear;
+}
+
+.llaveContenedor:after{
+    display:inline-block;
+    background-position: center;
+    content:"";
+    background-image: url(img/llave.png) !important;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    margin-bottom: -200%;
+    margin-right: -300%;
+    z-index:6;
+    width:300%;
+    height:200%;
+    z-index:6;
+    overflow: visible;
+    animation: llave 3s infinite linear;
+}
+
+.urnaContenedor:after{
+    display:inline-block;
+    background-position: center;
+    content:"";
+    background-image: url(img/urna.gif) !important;
+    background-repeat: no-repeat;
+    background-size: 40%;
+    margin-bottom: -200%;
+    margin-right: -300%;
+    z-index:6;
+    width:300%;
+    height:200%;
+    z-index:6;
+    overflow: visible;
+    animation: nada 100s infinite linear;
+}
+
+
 .camino{
   /*  mix-blend-mode: overlay;*/
     align-self: stretch;
@@ -83,6 +141,30 @@ body{
         transform: translateY(0px);
     }
 }
+
+@keyframes objeto{
+    100%{
+        transform: rotate(360deg);
+    }
+    
+}
+
+@keyframes llave{
+    50%{
+        transform: scale(0.5);
+    }
+    100%{
+        transform: scale(1);
+    }
+    
+}
+@keyframes nada{
+    99%{
+        transform: scale(0.999999999);
+    }
+    
+}
+
 
 .momia:after{
     display:inline-block;
