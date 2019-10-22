@@ -72,7 +72,16 @@ body{
     overflow: visible;
     animation: llave 3s infinite linear;
 }
-
+#gameOver{
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-image: url(img/gameOver.png); 
+    background-repeat: no-repeat;
+    background-position: center;
+    position: fixed;
+    display: none;
+}
 .urnaContenedor:after{
     display:inline-block;
     background-position: center;

@@ -27,12 +27,13 @@ var columnasArray;
 var locked = true;
 var monstruos, intervals = [];
 var vidas=5;
-var momias = 1;
+var momias = 2;
 var coordenada=0;
 let columnas = [1, 2, 3, 4, 5, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 19, 20, 21, 22, 23, 25, 26, 27, 28, 29];
 let filas = [2, 3, 4, 5, 7, 8, 9, 10, 12, 13, 14, 15, 17, 18, 19, 20];
 let esquinasX = [];
 var mapa;
+var gameOver=false;
 var personaje = {
     "coordenadaX": 12,
     "coordenadaY": 0,
@@ -65,6 +66,20 @@ function crearMomia(numMomia, x,y){
 }
 
 function teclado(e) {
+    if(gameOver){
+        if(e.keyCode==13){
+            momias=0;
+            vidas=5;
+            personaje = {
+                "coordenadaX": 12,
+                "coordenadaY": 0,
+                "personaje":true
+            }
+            score=0;
+             crearMapa();
+            }
+        return;
+    }
     if(locked){
         locked=false;
         //Arriba = 38 -> 1 -31
@@ -162,7 +177,7 @@ function compruebaContenidoColumna(x,y){
                 console.log(coords);
                 coords.coordenadaX+=1;
                 coords.coordenadaY+=1;
-                monstruos[monstruos.length] = crearMomia(momias ,coords.coordenadaX, coords.coordenadaY);
+                monstruos[monstruos.length] = crearMomia(monstruos.length ,coords.coordenadaX, coords.coordenadaY);
                 console.log(monstruos)
                 intervals[monstruos.length-1] = window.setInterval(function(){iaMomia(monstruos[monstruos.length-1])},500);
                 if(mapa.mapa[coords.coordenadaY][coords.coordenadaX]==0) mapa.mapa[coords.coordenadaY][coords.coordenadaX] = 10;
@@ -347,7 +362,7 @@ function mover(quien, direccionX, direccionY) {
             if(!pergamino){
                 vidas--;
                 document.getElementById("muerte").play();
-                if(vidas==0) gameOver();
+                if(vidas<=0) gameOverF();
             }
             else{
                 score+=500;
@@ -366,6 +381,7 @@ function mover(quien, direccionX, direccionY) {
 }
 
 function moverMomia(quien, direccionX, direccionY) {
+    if(gameOver) return;
     try {
         if (mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 0 || mapa.mapa[quien.coordenadaY + direccionY][quien.coordenadaX + direccionX] == 1) {
             
@@ -401,7 +417,7 @@ function moverMomia(quien, direccionX, direccionY) {
             if(!pergamino){
                 vidas--;
                 document.getElementById("muerte").play();
-                if(vidas==0) gameOver();
+                if(vidas<=0) gameOverF();
             }
             else{
                 score+=500;
@@ -433,20 +449,16 @@ function coordenadaColumnaFin(num){
     return retornar;
 }
 
-function gameOver(){
-    alert("Game Over");
-    momias=0;
-    vidas=5;
-    personaje = {
-        "coordenadaX": 12,
-        "coordenadaY": 0,
-        "personaje":true
-    }
-    score=0;
-    crearMapa();
+function gameOverF(){
+    gameOver=true;
+    document.getElementById("gameOver").style.display="block";
 }
 
 function crearMapa() {
+    document.getElementById("vidas").innerText=vidas;
+    document.getElementById("score").innerText=score;
+    gameOver=false;
+    document.getElementById("gameOver").style.display="none";
     for(let i=0; i<intervals.length; i++){
         clearInterval(intervals[i]);
     }
