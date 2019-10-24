@@ -216,3 +216,14 @@ p{
 span{
     color: red;
 }
+#leyenda{
+    display: flex;
+    justify-content: space-between;
+}
+#leyenda img{
+    width: 15%;
+    height: 50%;
+}
+body{
+    overflow: hidden;
+}

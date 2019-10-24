@@ -473,7 +473,7 @@ function crearMapa() {
     aleatorizarColumnas();
     document.getElementById("momias").innerText=momias;
     
-    document.getElementById("mapa").style.height = (window.innerHeight -window.innerHeight*0.1);
+    document.getElementById("mapa").style.height = (window.innerHeight -window.innerHeight*0.17);
     mapa = new Object();
     mapa.mapa = new Array();
     mapa.mapa[0] = new Array();
