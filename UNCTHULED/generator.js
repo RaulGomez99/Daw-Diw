@@ -179,7 +179,7 @@ function compruebaContenidoColumna(x,y){
                 coords.coordenadaY+=1;
                 monstruos[monstruos.length] = crearMomia(monstruos.length ,coords.coordenadaX, coords.coordenadaY);
                 console.log(monstruos)
-                intervals[monstruos.length-1] = window.setInterval(function(){iaMomia(monstruos[monstruos.length-1])},500);
+                intervals[monstruos.length-1] = window.setInterval(function(){iaMomia(monstruos[monstruos.length-1])},200);
                 if(mapa.mapa[coords.coordenadaY][coords.coordenadaX]==0) mapa.mapa[coords.coordenadaY][coords.coordenadaX] = 10;
                 else mapa.mapa[coords.coordenadaY][coords.coordenadaX] = 11;
                 momias++;
@@ -510,7 +510,7 @@ function crearMapa() {
     intervals=[];
     for(let i=0; i<momias; i++){
         console.log(monstruos[i]);
-        intervals[i]=window.setInterval(function(){iaMomia(monstruos[i])},500);
+        intervals[i]=window.setInterval(function(){iaMomia(monstruos[i])},200);
     }
     
 }
