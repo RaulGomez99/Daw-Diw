@@ -1,4 +1,3 @@
-var c;
 window.onload = function(){
     window.addEventListener("keydown", tecla);
     document.querySelectorAll("div").forEach(element => {
