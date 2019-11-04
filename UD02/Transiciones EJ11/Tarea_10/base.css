@@ -1,0 +1,36 @@
+:root{
+    --ctulhu-time-transition: 5s;
+}
+
+section{
+    border: 1px dotted black;
+    border-radius: 10px;
+}
+.caja{
+    content: url("../cthulhu.svg");
+    width: 3%;
+    height: 3%;
+}
+.mover{
+    transform: translateX(3200%);
+}
+
+.ease{
+    transition: var(--ctulhu-time-transition) cubic-bezier(0.25, 0.1, 0.22, 0.97) transform;
+}
+
+.ease-in{
+    transition: var(--ctulhu-time-transition) cubic-bezier(0.42, 0, 0.99, 0.99) transform;
+}
+
+.ease-out{
+    transition: var(--ctulhu-time-transition) cubic-bezier(0, 0, 0.55, 0.99) transform;
+}
+
+.ease-in-out{
+    transition: var(--ctulhu-time-transition) cubic-bezier(0.6831,0.0017,0.3203,0.9915) transform;
+}
+
+.linear{
+    transition: var(--ctulhu-time-transition) cubic-bezier(0, 0, 1, 0.96) transform;
+}
