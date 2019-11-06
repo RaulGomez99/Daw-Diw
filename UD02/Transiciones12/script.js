@@ -1,28 +1,27 @@
 function init(){
     document.querySelector("button").addEventListener("click", addCuadrado);
 }
-function addCuadrado(){
-    console.log("hola");
+function addCuadrado() {
     let div = document.createElement("box");
-   // div.classList.add("box");
+    // div.classList.add("box");
     div.addEventListener("click", secondLevel);
     document.querySelector("container").append(div);
 }
 
-function secondLevel(){
-    this.removeEventListener("click", function(){},true);
+function secondLevel() {
+    this.removeEventListener("click", secondLevel, false);   
     this.classList.add("evoluciona");
     this.addEventListener("click", thirdLevel);
 }
 
-function thirdLevel(){
-    this.removeEventListener("click", function(){},true);
+function thirdLevel() {
+    this.removeEventListener("click", thirdLevel, false);  
     this.classList.remove("evoluciona");
     this.addEventListener("click", ctulhea);
 }
 
-function ctulhea(){
-    this.removeEventListener("click", function(){},true);
+function ctulhea() {
+    this.removeEventListener("click", ctulhea, false);
     this.classList.add("ultimate");
 }
 
