@@ -10,9 +10,15 @@ section{
     content: url("../cthulhu.svg");
     width: 3%;
     height: 3%;
+    border: 1px solid black;
+    border-radius: 10px;
 }
+p{
+    text-align: center;
+}
+    
 .mover{
-    transform: translateX(3200%);
+    transform: translateX(3000% );
 }
 
 .ease{

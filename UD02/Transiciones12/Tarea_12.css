@@ -1,0 +1,76 @@
+body{
+    background-color:grey;
+    padding: 3rem;
+}
+
+container{
+    margin: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    height: 80vh;
+    /* 
+ 
+    ^(;,;)^ : Fragmento perdido
+
+   */
+}
+
+button{
+    border: 3px solid darkgrey;
+}
+
+
+box{
+    background-color: #1e0;
+    border:3px solid #AABBAA;
+    height: 100%;
+    transition: transform 1s;
+    /* 
+ 
+    ^(;,;)^ : Fragmento perdido
+
+   */
+    border-radius: 10px;
+}
+
+.evoluciona{
+    background-color: #e10;
+    transform: translateX(Calc(100% + 10px));
+    /* 
+ 
+    ^(;,;)^ : Fragmento perdido
+
+   */
+}
+
+.desevoluciona{
+    background-color: #10e;
+    
+        /* 
+ 
+    ^(;,;)^ : Fragmento perdido
+
+   */
+}
+
+.ultimate{
+    background-color: #441155;
+    content: url(cthulhu.svg);
+    width: Calc(100% - 6px);
+    /* 
+ 
+    ^(;,;)^ : Fragmento perdido
+
+   */
+}
+
+.ultimate:hover{
+    transform: scale(1.1);
+    /* 
+ 
+    ^(;,;)^ : Fragmento perdido
+
+   */
+}
