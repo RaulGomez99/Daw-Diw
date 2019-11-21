@@ -145,18 +145,29 @@ steps * {
 */
 progress{
     /* width:0%; */
-    transition: 0.1s; 
+    transition: 0.01s; 
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
      */
 }
 
+steplabel{
+    margin-left: 40px;
+}
 
 
 finalmsg{
-    animation: neon 1s linear infinite;
-    margin-left: 20px;
+    justify-self: center;
+    animation: neon 1.2s linear infinite;
+    /* margin-left: 20px; */
+    /* border: 1px solid red; */
+    border-radius: 100%;
+    /* padding: 5px; */
+    text-align: center;
+    width:100%;
+    
+    
     /* 
      * Fragmentos perdidos 
      * ^(;,;)^
@@ -165,16 +176,25 @@ finalmsg{
 
 @keyframes neon {
     0%{
-        text-shadow: -2px -2px 1px #000, 2px 2px 1px #000, -2px 2px 1px #000, 2px -2px 1px #000;
-        color:red;
+        box-shadow: 0px 0px 70px -2px lightgrey;
+        /* background: lightgrey; */
+        text-shadow: -1px -1px 0.5px #612c36, 1px 1px 0.5px #612c36, -1px 1px 0.5px #612c36, 1px -1px 0.5px #612c36;
+        color:#a7911f;
+        /* box-shadow: -1px 0px 56px 16px rgba(0,0,0,0.92); */
     }
     50%{
-        text-shadow: -2px -2px 1px red, 2px 2px 1px red, -2px 2px 1px red, 2px -2px 1px red;
-        color:black;
+        /* background: dimgrey; */
+        box-shadow: 0px 0px 70px 1px dimgrey;
+        text-shadow: -1px -1px 0.5px #612c36, 1px 1px 0.5px #612c36, -1px 1px 0.5px #612c36, 1px -1px 0.5px #612c36;
+        color:#f1d024;
+        /* color: #520c1a; */
     }
     100%{
-        text-shadow: -2px -2px 1px #000, 2px 2px 1px #000, -2px 2px 1px #000, 2px -2px 1px #000;
-        color:red;
+        /* background: lightgrey; */
+        box-shadow: 0px 0px 70px -2px lightgrey;
+        text-shadow: -1px -1px 0.5px #612c36, 1px 1px 0.5px #612c36, -1px 1px 0.5px #612c36, 1px -1px 0.5px #612c36;
+        color:#a7911f;
+        /* box-shadow: -1px 0px 56px 16px rgba(0,0,0,0.92); */
     }
     /* 
      * Fragmentos perdidos 
