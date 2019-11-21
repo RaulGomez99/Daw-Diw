@@ -39,12 +39,12 @@ function migration(){
     if(todos[num].nodeName=="SPAN") migration();
     var numE = todos[num].attributes["data-step"].value;
     if((numE+1)%3==0){
-        console.log("Tonto quien lo lea");
         todos[num].style.opacity="1";
      //   todos[num].style.transition="width 3s";
-        todos[num].value=100;
-        todos[num].style.width="100%";
-        todos[num].addEventListener("transitionend",migration);
+        // todos[num].value=100;
+        //todos[num].style.width="100%";
+        todos[num].addEventListener("transitionend",progressBaru);
+        todos[num].style.width="99%";
     }else if(numE%3==0){
         todos[num].style.opacity="1";
         todos[num].addEventListener("transitionend",migration);
@@ -55,6 +55,26 @@ function migration(){
     
     //todos[num].classList.remove("estabaEscondido");
 
+}
+function progressBaru(){
+    progressBar(this);
+}
+
+function progressBar(progress){
+    
+    progress.addEventListener("transitionend",progressBaru);
+    progress.value+=1;
+    if(progress.style.width=="100%"){
+        progress.style.width="99.999%";
+    }else{
+        progress.style.width="100%";
+    }
+    if(progress.value==100){
+        console.log(progress);
+        progress.removeEventListener("transitionend",progressBaru);
+        //this.removeEventListener("transitionend")
+        migration();
+    } 
 }
 
 // Init the environment when all is ready
