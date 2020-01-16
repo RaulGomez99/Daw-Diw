@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ejemplos Básicos CANVAS - 01</title>
+    <link rel="stylesheet" href="canvas.css">
+</head>
+<body>
+    <header>
+        <h1> Ejemplos de Canvas Básico - 01</h1>
+    </header>
+
+    <main>
+        <canvas width="500" height="500">
+        </canvas>
+    </main>
+
+    <script>
+        const canvas = document.querySelector("canvas");
+
+        function casilla(){
+            this.widthOf
+        }
+
+        let ctx = canvas.getContext("2d");
+        let negras = false;
+        ctx.fillStyle="black";
+        for (let y = 0; y < 8; y++) {
+            for (let x = 0; x < 8; x++) {
+                if(negras){
+                    ctx.fillRect(x*canvas.width/8,y*canvas.height/8,canvas.width/8,canvas.height/8)
+                }
+                negras=!negras;
+            }
+            negras=!negras;
+        }
+
+
+
+        ctx.stroke();
+
+       /* const dioses = [
+        {nombre:"Cthulhu",poder:1000,color:"green"},
+        {nombre:"Nyarlatothep",poder:600,color:"red"},
+        {nombre:"Azazoth",poder:1400,color:"grey"},
+        {nombre:"Pepe",poder:800,color:"purple"}
+        ];
+        
+
+        let anguloActual = -0.5 * Math.PI;
+        const poderTotal = dioses.reduce( (suma ,{poder})=> suma+=poder,0);*/
+
+
+
+
+    </script>
+</body>
+</html>
+
