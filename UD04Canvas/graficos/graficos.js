@@ -8,7 +8,7 @@ function buildGrafico(){
         {nombre:"Pepe",poder:800,color:"purple"}
     ];*/
     let dioses = [];
-    let colores =  ["","red","blue","green","yellow"]
+    let colores =  ["","red","lightblue","green","yellow"]
     for (let i = 1; i <= 4; i++) {
         dioses.push({
             nombre:document.querySelectorAll(".left")[i].value,
@@ -51,6 +51,9 @@ function graficoQuesito(dioses){
 
     let empezar = -0.5*Math.PI;
     const poderTotal = dioses.reduce( (suma ,{poder})=> suma+=poder,0);
+    console.log(ctx.textAlign)
+
+    ctx.font = "bold";
     dioses.forEach(dios=> {
         let acabar= ((2*Math.PI*dios.poder)/poderTotal)+empezar;
         ctx.fillStyle=dios.color;
@@ -58,8 +61,26 @@ function graficoQuesito(dioses){
         ctx.arc(width/2, height/2, width/4,empezar,acabar);
         ctx.lineTo(width/2,height/2)
         ctx.fill();
+
+        //Texto
+        var midAngle = empezar + (acabar - empezar) / 2;
+        var labelRadius = width/4 * .65;
+        var x = width/2 + (labelRadius) * Math.cos(midAngle);
+        // if(midAngle>=-0.5*Math.PI && empezar+midAngle<=0.5*Math.PI) x+=5; //Centrarlo un poco porque es un renglon
+        // else x-=5;
+        var y = height/2 + (labelRadius) * Math.sin(midAngle);
+        y+=10; //Acercarlo un poco al cento
+        ctx.translate(x,y);
+        if(midAngle>0.5*Math.PI) midAngle-=(Math.PI);
+        ctx.rotate(midAngle);
+        ctx.fillStyle = 'black';
+        ctx.textAlign = "center"; 
+        ctx.fillText(dios.nombre, -3, -3);
+        ctx.rotate(-midAngle);
+        ctx.translate(-x,-y);
         empezar = acabar;
     });
+    
     
 
 
@@ -77,12 +98,21 @@ function graficoRayas(dioses){
     const espacios = (dioses.length*2)+1; //Ya que es los rectangulos mas espacios
     const espacio = canvas.width/espacios;
     let booleana = false;
+    ctx.font = "bold";
     for (let i = 0; i < espacios; i++) {
         if(booleana){
             const dios = dioses[Math.floor(i/2)];
             ctx.fillStyle=dios.color;
             let altura = Math.round(width*dios.poder/(poderTotal+20))
             ctx.fillRect(espacio*i,height-altura,espacio,altura);
+            //Texto
+            ctx.translate(espacio*i+espacio/2,height);
+            ctx.rotate(Math.PI*1.5);
+            ctx.fillStyle = 'black';
+            ctx.textAlign = "start"; 
+            ctx.fillText(dios.nombre, 0, 0);
+            ctx.rotate(-Math.PI*1.5);
+            ctx.translate(-(espacio*i+espacio/2),-height);
         }
         booleana=!booleana;
         
@@ -101,6 +131,8 @@ function graficoLineas(dioses){
     const espacio = canvas.width/espacios;
     let booleana = false;
     let yAnterior=width;
+    ctx.font = "bold";
+    ctx.textAlign = "start"; 
     for (let i = 0; i < espacios; i++) {
         if(booleana){
             const dios = dioses[Math.floor(i/2)];
@@ -115,6 +147,15 @@ function graficoLineas(dioses){
             ctx.fillStyle=dios.color;
             ctx.fill();
             
+            //Texto
+           // ctx.translate(espacio*i,height-altura);
+          //  ctx.rotate(Math.PI*1.5);
+            ctx.fillStyle = 'black';
+            ctx.textAlign = "center"; 
+            ctx.fillText(dios.nombre, espacio*i, height-altura);
+        //    ctx.rotate(-Math.PI*1.5);
+        //    ctx.translate(-(espacio*i),-(height-altura));
+
             yAnterior=height-altura;
         }
         booleana=!booleana;
