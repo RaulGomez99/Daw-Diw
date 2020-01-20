@@ -31,6 +31,7 @@ function buildGrafico(){
 
 function loadListeners(){
     document.querySelector("input[name='grafiqueame']").addEventListener("click",buildGrafico);
+    document.querySelector("input[name='jpg']").addEventListener("click",descargarCanvas,false);
 }
 
 
@@ -54,6 +55,7 @@ function graficoQuesito(dioses){
     console.log(ctx.textAlign)
 
     ctx.font = "bold";
+    ctx.textBaseline = "middle"; 
     dioses.forEach(dios=> {
         let acabar= ((2*Math.PI*dios.poder)/poderTotal)+empezar;
         ctx.fillStyle=dios.color;
@@ -66,10 +68,8 @@ function graficoQuesito(dioses){
         var midAngle = empezar + (acabar - empezar) / 2;
         var labelRadius = width/4 * .65;
         var x = width/2 + (labelRadius) * Math.cos(midAngle);
-        // if(midAngle>=-0.5*Math.PI && empezar+midAngle<=0.5*Math.PI) x+=5; //Centrarlo un poco porque es un renglon
-        // else x-=5;
         var y = height/2 + (labelRadius) * Math.sin(midAngle);
-        y+=10; //Acercarlo un poco al cento
+
         ctx.translate(x,y);
         if(midAngle>0.5*Math.PI) midAngle-=(Math.PI);
         ctx.rotate(midAngle);
@@ -99,6 +99,7 @@ function graficoRayas(dioses){
     const espacio = canvas.width/espacios;
     let booleana = false;
     ctx.font = "bold";
+    ctx.textBaseline = "middle"; 
     for (let i = 0; i < espacios; i++) {
         if(booleana){
             const dios = dioses[Math.floor(i/2)];
@@ -133,6 +134,7 @@ function graficoLineas(dioses){
     let yAnterior=width;
     ctx.font = "bold";
     ctx.textAlign = "start"; 
+    ctx.textBaseline = "middle"; 
     for (let i = 0; i < espacios; i++) {
         if(booleana){
             const dios = dioses[Math.floor(i/2)];
@@ -161,6 +163,26 @@ function graficoLineas(dioses){
         booleana=!booleana;
         
     }
+}
+
+function descargarCanvas(){
+    console.log("Descargar canvas")
+    const canvas = document.querySelector("canvas");
+    let ctx = canvas.getContext("2d");
+    let width = canvas.width;
+    let height = canvas.height;
+    
+    var fullQuality = canvas.toDataURL('image/png', 1.0);
+    // window.win = open(fullQuality);
+    // //response.redirect("~/testpage.html");
+    // setTimeout('win.document.execCommand("SaveAs")', 100);
+    // setTimeout('win.close()', 500);
+    let a = document.createElement("a");
+    a.href=fullQuality;
+    // a.target="_blank";
+    a.download="Grafico.png";
+    a.click();
+    
 }
 
 window.onload=init;
